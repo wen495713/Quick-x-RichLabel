@@ -104,7 +104,7 @@ end
 function RichLabel:getLabelSize()
 	local width = self._maxWidth or 0
 	local height = self._maxHeight or 0
-	return CCSize(width, height)
+	return cc.size(width, height)
 end
 
 --是否在播放动画
@@ -187,7 +187,7 @@ function RichLabel:playFadeInAnim(wordPerSec)
 	                			local sprite = spriteArray[i]
 	                			
 	                			if sprite then
-	                				local action = CCFadeIn:create(0.2)
+	                				local action = cc.FadeIn:create(0.2)
 	                				action:setTag(99)
 	                				sprite:runAction(action)
 	                			else
@@ -203,7 +203,7 @@ function RichLabel:playFadeInAnim(wordPerSec)
 		    self:removeNodeEventListenersByEvent(cc.NODE_ENTER_FRAME_EVENT)
 		    self:unscheduleUpdate()
 		    self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, updatePosition) 
-		    self:scheduleUpdate_()
+		    self:scheduleUpdate()
 		end
 	end
 end
@@ -217,8 +217,8 @@ function RichLabel:init_(params)
 	--大小和颜色同理
 	local fontName   = params.fontName or "Arial" --默认字体
 	local fontSize   = params.fontSize or 30 --默认大小
-	local fontColor  = params.fontColor or ccc3(255, 255, 255) --默认白色
-	local dimensions = params.dimensions or CCSize(0, 0) --默认无限扩展，即沿着x轴往右扩展
+	local fontColor  = params.fontColor or cc.c3b(255, 255, 255) --默认白色
+	local dimensions = params.dimensions or cc.size(0, 0) --默认无限扩展，即沿着x轴往右扩展
 	local text       = params.text
 
 	--装文字和图片精灵
@@ -244,8 +244,8 @@ function RichLabel:getSizeOfSprites_(spriteArray)
 	for i, sprite in ipairs(spriteArray) do
 		-- local contentSize = sprite:getContentSize()
 		local rect = sprite:getBoundingBox()
-		widthArr[i] = rect.size.width
-		heightArr[i] = rect.size.height
+		widthArr[i] = rect.width
+		heightArr[i] = rect.height
 	end
 	return widthArr, heightArr
 
@@ -377,13 +377,13 @@ function RichLabel:createSprite_(parseArray)
 			local fontSize = dic.fontSize or self._fontSize
 			local fontColor = dic.fontColor or self._fontColor
 			for j, word in ipairs(textArr) do
-				local label = CCLabelTTF:create(word, fontName, fontSize)
+				local label = cc.LabelTTF:create(word, fontName, fontSize)
 				label:setColor(fontColor)
 				spriteArray[#spriteArray + 1] = label
 				self._containLayer:addChild(label)
 			end
 		elseif dic.image then
-			local sprite = CCSprite:create(dic.image)
+			local sprite = cc.Sprite:create(dic.image)
 			local scale = dic.scale or 1
 			sprite:setScale(scale)
 			spriteArray[#spriteArray + 1] = sprite
@@ -503,7 +503,7 @@ function  RichLabel:convertColor_(xStr)
     local red = toTen(r) or self._fontColor.r
     local green = toTen(g) or self._fontColor.g
     local blue = toTen(b) or self._fontColor.b
-    return ccc3(red, green, blue)
+    return cc.c3b(red, green, blue)
 end
 
 -- string.split()

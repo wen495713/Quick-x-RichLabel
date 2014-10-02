@@ -21,14 +21,14 @@ function MainScene:test()
 
 	local params = {
 						text = strArr[1],
-						dimensions = CCSize(curWidth, curHeight)
+						dimensions = cc.size(curWidth, curHeight)
 					}
 	local testLabel = RichLabel:create(params)
 	self:addChild(testLabel)
 	testLabel:setPosition(display.cx - 100, display.cy)
 
 	--提示信息
-	local infoLabel = CCLabelTTF:create("", "Arial", 30)
+	local infoLabel = cc.LabelTTF:create("", "Arial", 30)
 	self:addChild(infoLabel)
 	infoLabel:setPosition(display.cx, display.bottom + 50)
 
@@ -50,14 +50,14 @@ function MainScene:test()
 				textBg = nil
 			end
 
-			contentBg = CCSprite:createWithTexture(nil, CCRect(0, 0, contentSize.width, contentSize.height))
-			textBg = CCSprite:createWithTexture(nil, CCRect(0, 0, textSize.width, textSize.height))
+			contentBg = cc.Sprite:createWithTexture(nil, cc.rect(0, 0, contentSize.width, contentSize.height))
+			textBg = cc.Sprite:createWithTexture(nil, cc.rect(0, 0, textSize.width, textSize.height))
 
-			contentBg:setColor(ccc3(200, 200, 200))
-			textBg:setColor(ccc3(100, 100, 100))
+			contentBg:setColor(cc.c3b(200, 200, 200))
+			textBg:setColor(cc.c3b(100, 100, 100))
 
-			contentBg:setAnchorPoint(ccp(0, 1))
-			textBg:setAnchorPoint(ccp(0, 1))
+			contentBg:setAnchorPoint(cc.p(0, 1))
+			textBg:setAnchorPoint(cc.p(0, 1))
 
 			contentBg:setPosition(display.cx - 100, display.cy)
 			textBg:setPosition(display.cx - 100, display.cy)
@@ -75,7 +75,7 @@ function MainScene:test()
 		end
 
 		local label = self:addTestLabel("大小测试", function ()
-			local contentSize = CCSize(math.random(10, 30) * 10 + 50, curHeight)
+			local contentSize = cc.size(math.random(10, 30) * 10 + 50, curHeight)
 			testLabel:setDimensions(contentSize)
 			local textSize = testLabel:getLabelSize()
 			local logStr = "TextSize:"..textSize.width.." "..textSize.height.." setSize:"..contentSize.width.." "..contentSize.height
@@ -107,7 +107,7 @@ end
 
 --简单的触摸回调
 function MainScene:addTestLabel(text, callback)
-	local labelBtn = CCLabelTTF:create(text, "Arial", 30)
+	local labelBtn = cc.LabelTTF:create(text, "Arial", 30)
 	self:addChild(labelBtn)
 	labelBtn:setTouchEnabled(true)
 
@@ -120,7 +120,7 @@ function MainScene:addTestLabel(text, callback)
             return true -- catch touch event, stop event dispatching
         end
 
-        local touchInSprite = labelBtn:getCascadeBoundingBox():containsPoint(CCPoint(x, y))
+        local touchInSprite = labelBtn:getCascadeBoundingBox():containsPoint(cc.p(x, y))
         if event == "ended" then
             labelBtn:setScale(labelBtn:getScale() / 0.9)
             if touchInSprite then 
